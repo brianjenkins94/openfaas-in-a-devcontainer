@@ -1,0 +1,38 @@
+{
+  "name": "dashboard",
+  "version": "0.0.0",
+  "description": "",
+  "type": "module",
+  "author": "Brian Jenkins",
+  "license": "MIT",
+  "scripts": {
+    "deploy": "cd functions && faas-cli build && faas-cli push && faas-cli deploy",
+    "logs": "faas-cli logs",
+    "ls": "kubectl get deploy -n openfaas-fn",
+    "prune": "docker system prune --all",
+    "start": "nodemon --ext ts,tsx --ignore dist --exec \"node --experimental-specifier-resolution=node --loader=ts-node/esm server.ts\"",
+    "test": "exit 0"
+  },
+  "dependencies": {
+    "ejs": "latest",
+    "express": "latest",
+    "helmet": "latest",
+    "http-proxy-middleware": "latest",
+    "morgan": "latest",
+    "nodemon": "latest",
+    "ts-node": "latest"
+  },
+  "devDependencies": {
+    "@tsconfig/node-lts": "latest",
+    "@types/node": "latest",
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
+    "eslint": "latest",
+    "typescript": "latest"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "sideEffects": false
+}

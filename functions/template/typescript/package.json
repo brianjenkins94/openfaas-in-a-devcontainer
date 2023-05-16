@@ -1,0 +1,17 @@
+{
+  "name": "openfaas-typescript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "author": "Brian Jenkins",
+  "license": "MIT",
+  "dependencies": {
+    "express": "latest"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "sideEffects": false
+}

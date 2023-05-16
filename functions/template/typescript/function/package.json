@@ -1,0 +1,28 @@
+{
+  "name": "openfaas-function",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "type": "module",
+  "author": "",
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "tsup handler.ts --format esm --treeshake",
+    "start": "nodemon --ext ts,tsx --ignore dist --exec \"node --experimental-specifier-resolution=node --loader=ts-node/esm handler.ts\"",
+    "test": "echo \"Error: no test specified\" && exit 0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@tsconfig/node-lts": "latest",
+    "@types/node": "latest",
+    "nodemon": "latest",
+    "ts-node": "latest",
+    "tsup": "latest",
+    "typescript": "latest"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "sideEffects": false
+}
