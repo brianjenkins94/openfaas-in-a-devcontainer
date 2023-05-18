@@ -17,7 +17,7 @@ RUN sudo apt-get update > /dev/null \
 	# kubectl
 	#&& arkade get kubectl \
 	#&& sudo mv /home/vscode/.arkade/bin/kubectl /usr/local/bin/
-	# kind
+	# KinD
 	#&& arkade get kind \
 	#&& sudo mv /home/vscode/.arkade/bin/kind /usr/local/bin/
 

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# kind
+# KinD
 arkade get kind
 sudo mv ~/.arkade/bin/kind /usr/local/bin/
 
@@ -20,8 +20,18 @@ containerdConfigPatches:
 nodes:
 - role: control-plane
 	extraPortMappings:
+	# OpenFaaS
 	- containerPort: 31112
 		hostPort: 8080
+	# Prometheus
+	- containerPort: 9090
+		hostPort: 9090
+	# Minio
+	- containerPort: 9000
+		hostPort: 9000
+	# Redis
+	- containerPort: 6379
+		hostPort: 6379
 EOF
 
 if [ "$(docker inspect -f='{{json .NetworkSettings.Networks.kind}}' "kind-registry")" = 'null' ]; then
@@ -40,9 +50,20 @@ data:
 		help: "https://kind.sigs.k8s.io/docs/user/local-registry/"
 EOF
 
-# OpenFaaS
+# OpenFaaS (:8080)
 arkade install openfaas
 kubectl rollout status -n openfaas deploy
+
+# cron-connector
+arkade install cron-connector
+
+# Minio (:9000)
+arkade install minio
+arkade get mc
+sudo mv ~/.arkade/bin/mc /usr/local/bin/
+
+# Redis (:6379)
+arkade install redis
 
 # faas-cli
 arkade get faas-cli
