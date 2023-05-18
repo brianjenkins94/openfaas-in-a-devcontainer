@@ -23,12 +23,12 @@ nodes:
 	# OpenFaaS
 	- containerPort: 31112
 		hostPort: 8080
-	# Prometheus
-	- containerPort: 9090
-		hostPort: 9090
 	# Minio
 	- containerPort: 9000
 		hostPort: 9000
+	# Prometheus
+	- containerPort: 9090
+		hostPort: 9090
 	# Redis
 	- containerPort: 6379
 		hostPort: 6379
@@ -62,8 +62,11 @@ arkade install minio
 arkade get mc
 sudo mv ~/.arkade/bin/mc /usr/local/bin/
 
+# Prometheus
+arkade install prometheus
+
 # Redis (:6379)
-arkade install redis
+arkade install redis --namespace openfaas-fn --set usePassword=false --set master.persistence.enabled=false
 
 # faas-cli
 arkade get faas-cli

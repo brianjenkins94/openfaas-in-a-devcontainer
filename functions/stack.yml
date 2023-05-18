@@ -9,3 +9,5 @@ functions:
     image: localhost:5000/example:latest
 #   build_args:
 #     ADDITIONAL_PACKAGES: curl
+    environment:
+        redis: openfaas-redis-master
