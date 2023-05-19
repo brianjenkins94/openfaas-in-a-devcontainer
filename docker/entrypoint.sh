@@ -61,9 +61,10 @@ arkade install cron-connector
 arkade install minio
 arkade get mc
 sudo mv ~/.arkade/bin/mc /usr/local/bin/
+kubectl expose deployment minio --type=NodePort --name=minio
 
-# Prometheus
-arkade install prometheus
+# Prometheus (:9090)
+kubectl expose deployment prometheus -n openfaas --type=NodePort --name=prometheus
 
 # Redis (:6379)
 arkade install redis --namespace openfaas-fn --set usePassword=false --set master.persistence.enabled=false

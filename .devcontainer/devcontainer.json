@@ -27,7 +27,7 @@
 			"version": "latest"
 		}
 	},
-	"forwardPorts": [8000, 8080],
+	"forwardPorts": [8000],
 	"postCreateCommand": "/entrypoint.sh",
 	"runArgs": ["--network=host"]
 }
