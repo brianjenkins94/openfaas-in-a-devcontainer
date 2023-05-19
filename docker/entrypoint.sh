@@ -24,13 +24,13 @@ nodes:
 	- containerPort: 31112
 		hostPort: 8080
 	# Minio
-	- containerPort: 9000
+	- containerPort: 30000
 		hostPort: 9000
 	# Prometheus
-	- containerPort: 9090
+	- containerPort: 30090
 		hostPort: 9090
 	# Redis
-	- containerPort: 6379
+	- containerPort: 30379
 		hostPort: 6379
 EOF
 
@@ -61,13 +61,14 @@ arkade install cron-connector
 arkade install minio
 arkade get mc
 sudo mv ~/.arkade/bin/mc /usr/local/bin/
-kubectl expose deployment minio --type=NodePort --name=minio
+kubectl patch service minio --type="json" -p '[{"op":"replace","path":"/spec/type","value":"NodePort"},{"op":"replace","path":"/spec/ports/0/nodePort","value":30000}]'
 
 # Prometheus (:9090)
-kubectl expose deployment prometheus -n openfaas --type=NodePort --name=prometheus
+kubectl patch service prometheus -n openfaas --type="json" -p '[{"op":"replace","path":"/spec/type","value":"NodePort"},{"op":"replace","path":"/spec/ports/0/nodePort","value":30090}]'
 
 # Redis (:6379)
 arkade install redis --namespace openfaas-fn --set usePassword=false --set master.persistence.enabled=false
+kubectl patch service redis-master --namespace openfaas-fn --type="json" -p '[{"op":"replace","path":"/spec/type","value":"NodePort"},{"op":"replace","path":"/spec/ports/0/nodePort","value":30379}]'
 
 # faas-cli
 arkade get faas-cli
