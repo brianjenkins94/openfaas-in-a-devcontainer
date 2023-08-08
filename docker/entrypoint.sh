@@ -52,7 +52,7 @@ EOF
 
 # OpenFaaS (:8080)
 arkade install openfaas
-kubectl rollout status -n openfaas deploy
+kubectl rollout status --namespace openfaas deploy
 
 # cron-connector
 arkade install cron-connector
@@ -64,7 +64,7 @@ sudo mv ~/.arkade/bin/mc /usr/local/bin/
 kubectl patch service minio --type="json" -p '[{"op":"replace","path":"/spec/type","value":"NodePort"},{"op":"replace","path":"/spec/ports/0/nodePort","value":30000}]'
 
 # Prometheus (:9090)
-kubectl patch service prometheus -n openfaas --type="json" -p '[{"op":"replace","path":"/spec/type","value":"NodePort"},{"op":"replace","path":"/spec/ports/0/nodePort","value":30090}]'
+kubectl patch service prometheus --namespace openfaas --type="json" -p '[{"op":"replace","path":"/spec/type","value":"NodePort"},{"op":"replace","path":"/spec/ports/0/nodePort","value":30090}]'
 
 # Redis (:6379)
 arkade install redis --namespace openfaas-fn --set usePassword=false --set master.persistence.enabled=false
@@ -74,11 +74,11 @@ kubectl patch service redis-master --namespace openfaas-fn --type="json" -p '[{"
 arkade get faas-cli
 sudo mv ~/.arkade/bin/faas-cli /usr/local/bin/
 
-PASSWORD=$(kubectl get secret -n openfaas basic-auth -o jsonpath="{.data.basic-auth-password}" | base64 --decode; echo)
+PASSWORD=$(kubectl get secret --namespace openfaas basic-auth -o jsonpath="{.data.basic-auth-password}" | base64 --decode; echo)
 echo -n "$PASSWORD" | faas-cli login --username admin --password-stdin
 
 npm install
 
 npm run deploy
 
-echo "> Listening on http://admin:$PASSWORD@localhost:8080/"
+echo "> Ready on http://admin:$PASSWORD@localhost:8080/"
